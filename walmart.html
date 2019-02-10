@@ -1,0 +1,128 @@
+<html>
+<head>
+</head>
+<body>
+<script type="text/javascript">
+
+/// Problem 1
+var employees =
+   [
+    {
+      "name": "Brian",
+      "employment_type": "contractor",
+      "baseamount": 100,
+      "hourperweek": 20
+    },
+    {
+      "name": "George",
+      "employment_type": "fte",
+      "baseamount": 75000,
+      "hourperweek": 0
+    },
+    {
+      "name": "Veronica",
+      "employment_type": "contractor",
+      "baseamount": 100,
+      "hourperweek": 10
+    }
+  ];
+
+function calculateSalary(name) {
+	this.name=name,
+    this.totalSalary=0,
+    this.getSalary= function(employment_type,baseamount,hourperweek){
+    	if(employment_type=="contractor")
+		 this.totalSalary = baseamount*52*hourperweek;
+		else if(employment_type=="fte")
+		 this.totalSalary = baseamount;
+		 else{
+		 
+		 }
+	}
+}
+var numArr=[];
+for(var i=0;i<employees.length;i++){
+	p= new calculateSalary("aa");
+	p.getSalary(employees[i].employment_type,employees[i].baseamount,employees[i].hourperweek);
+	numArr.push(p.totalSalary);
+}
+
+numArr.sort((a,b) => a - b); 
+console.log(numArr);
+
+
+/// Problem 2
+var employees =
+   [
+    {
+      "name": "George",
+      "employment_type": "fte",
+      "baseamount": 75000,
+      "hourperweek": 20
+    },
+    {
+      "name": "Stephen",
+      "employment_type": "fte",
+      "baseamount": 50000,
+      "hourperweek": 0
+    },
+    {
+      "name": "Veronica",
+      "employment_type": "manager",
+      "baseamount": "2,4",
+      "hourperweek": 10
+    },
+    {
+      "name": "Christopher",
+      "employment_type": "manager",
+      "baseamount": "1,5",
+      "hourperweek": 10
+    },
+    {
+      "name": "Mary",
+      "employment_type": "fte",
+      "baseamount": 100000,
+      "hourperweek": 10
+    }
+  ];
+
+function calculateSalary(name) {
+	this.name=name,
+    this.totalSalary=0,
+    this.managerSalary=0,
+    this.getSalary= function(employment_type,baseamount,hourperweek){
+    	if(employment_type=="contractor")
+		 this.totalSalary = baseamount*52*hourperweek;
+		else if(employment_type=="fte"){
+		 this.totalSalary = baseamount;
+		 }
+		 else{
+		 	this.getManagerSalary(employment_type,baseamount,hourperweek);
+		 	this.totalSalary = this.managerSalary;
+		 }
+	}
+	this.getManagerSalary= function(employment_type,baseamount,hourperweek){
+		var baseamountArr = baseamount.split(",");
+		for(j=0;j<baseamountArr.length;j++){
+			
+			if(employees[baseamountArr[j]-1].employment_type!="manager"){
+				this.getSalary(employees[baseamountArr[j]-1].employment_type,employees[baseamountArr[j]-1].baseamount,employees[baseamountArr[j]-1].hourperweek);
+				this.managerSalary+=this.totalSalary;
+			}else{
+				this.getManagerSalary(employees[baseamountArr[j]-1].employment_type,employees[baseamountArr[j]-1].baseamount,employees[baseamountArr[j]-1].hourperweek);
+			}
+		}
+	}
+}
+var numArr=[];
+for(var i=0;i<employees.length;i++){
+	p= new calculateSalary(employees[i].name);
+	p.getSalary(employees[i].employment_type,employees[i].baseamount,employees[i].hourperweek);
+	numArr.push(p.totalSalary);
+}
+
+numArr.sort((a,b) => a - b); 
+console.log(numArr);
+</script>
+</body>
+</html>
